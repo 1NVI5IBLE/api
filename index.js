@@ -50,6 +50,38 @@ app.post("/value", async (req, res) => {
     }
 });
 
+
+app.post("/friends", async (req, res) => {
+    const userId = req.body.userId;
+    if (!userId) return res.json({ error: "No userId" });
+
+    try {
+        const url = `https://friends.roblox.com/v1/users/${userId}/friends/count`;
+        const { data } = await axios.get(url);
+
+        res.json({ count: data.count });
+    } catch (err) {
+        res.json({ error: "Failed to fetch friends count" });
+    }
+});
+
+
+app.post("/followers", async (req, res) => {
+    const userId = req.body.userId;
+    if (!userId) return res.json({ error: "No userId" });
+
+    try {
+        const url = `https://friends.roblox.com/v1/users/${userId}/followers/count`;
+        const { data } = await axios.get(url);
+
+        res.json({ count: data.count });
+    } catch (err) {
+        res.json({ error: "Failed to fetch followers count" });
+    }
+});
+
+
+
 app.listen(3000, () => {
     console.log("API Running on port 3000");
 });
